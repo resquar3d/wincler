@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wincked Date</title>
+
+  <!-- CSS -->
+   <link rel="stylesheet" href="styles.css">
+   <!-- Icons/Typography Section -->
+    <!-- fontawesome link here -->
+</head>
+<body>
+  <main>
+    <div class="hero">
+      <div class="overlay"></div>
+      <nav class="nav-menu">
+        <h1>Wincler</h1>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="people.html">People</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="#login-modal">Login</a></li>
+          <li><a href="review.html">Reviews</a></li>
+        </ul>
+      </nav>
+      <div class="hero-text">
+        <h2>Winck A Date</h2>
+        <p>💗 Find the perfect match person suited for you!</p>
+
+                  <!-- Search Bar -->
+    <form action="people.html" method="GET" style="margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.1); border-radius: 12px; display: flex; gap: 1rem; justify-content: center; align-items: center;">
+      <label for="gender">Gender:</label>
+      <select name="gender" id="gender">
+        <option value="">Any</option>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+        <option value="X">Other</option>
+      </select>
+
+      <label for="age">Min Age:</label>
+      <input type="number" name="age" id="age" min="18" placeholder="18">
+
+      <label for="location">Location:</label>
+      <select name="location" id="location">
+        <option value="">Any</option>
+        <option value="city">City</option>
+        <option value="rural">Rural</option>
+      </select>
+
+      <button type="submit" style="padding: 0.5rem 1rem; background: #ff3366; color: #fff; border: none; border-radius: 6px; cursor: pointer;">Search</button>
+    </form>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="cta-box">
+        <h3>Find your dream Date here!:</h3>
+        <p>Check out the registered users on our site.<br> Register to find a match, fill up the form below. ⬇️</p>
+        <a href="register.html">Click Me</a>
+      </div>
+      <div class="people-box">
+        <h3>People</h3>
+        <p>Here you can find the people who have registered on our site.</p>
+        <a href="people.html">People</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="review-box" style="text-align: center;">
+        <h3>Don't forget to review and leave a comment on our page!!!.</h3>
+        <a href="review.html" style="display: inline-block; margin-top: 1rem; padding: 0.75rem 1.5rem; background: #ff3366; color: #fff; text-decoration: none; border-radius: 6px; font-family: 'Segoe UI', sans-serif;">Click Here</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Signup Modal -->
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <a href="#" class="close-btn">&times;</a>
+      <h2>Login</h2>
+      <form>
+        <input type="text" placeholder="Username" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reviews Modal -->
+  <div id="reviews-modal" class="modal">
+    <div class="modal-content">
+      <a href="#" class="close-btn">&times;</a>
+      <h2>User Reviews</h2>
+      <p>“Amazing experience! Found my match within days.” - Jamie</p>
+      <p>“Fun, easy to use, and real people!” - Alex</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 by R.E Espino – Student, Winc-winc Academy. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+  
+</body>
+</html>

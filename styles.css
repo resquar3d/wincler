@@ -1,0 +1,263 @@
+/* typography styling here */
+
+:root {
+    --bg-primary-color : #0f0f0f;
+    --bg-secondary-color :  #001f3f;
+    --bg-tertiary-cta-card :  #03396c;
+    --txt-primary :  #fff;
+    --bg-hover-primary : #f43131;
+}
+
+/* General Styling */
+* { margin: 0; 
+    padding: 0; 
+    box-sizing: 
+    border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: 'Georgia', serif;
+    background-color: #0f0f0f;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+  }
+
+  /* Navigation/Main Section */
+  nav h1 { 
+    color: var(--txt-primary); 
+    font-size: 1.8rem; 
+    font-weight: bold; 
+}
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  nav ul li a {
+    color: var(--txt-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .nav-menu a {
+    color: var(--txt-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .nav-menu a:hover {
+    color: var(--bg-hover-primary);
+  }
+
+  main {
+    flex: 1 0 auto;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+  }
+
+/* Hero Section */
+  .hero {
+    background: url('/Fixed/Images/ChatGPT Image 17 mei 2025, 17_28_18.png') center/cover no-repeat;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1;
+  }
+
+  .hero-text {
+    z-index: 2;
+    color: var(--txt-primary);
+    top: 35%;
+    left: 50%;
+    text-align: center;
+    justify-content: center;
+    animation: fadeInUp 1s ease-out;
+  }
+
+  .hero-text h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--txt-primary);
+  }
+  .hero-text p {
+    font-size: 1.2rem;
+    color: var(--txt-primary);
+    margin-top: 0.5rem;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px);
+    }
+
+    to { opacity: 1; transform: translateY(0);
+    }
+  }
+
+  .section {
+    background: var(--bg-secondary-color);
+    padding: 2rem;
+    text-align: center;
+  }
+  .cta-box, .people-box {
+    background: #4a6f92;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  .cta-box {
+    background: #4a6f92;
+    color: var(--txt-primary);
+  }
+  .people-box {
+    background: var(--bg-tertiary-cta-card);
+    color : var(--txt-primary);
+  }
+  .cta-box a, .people-box a {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: #004080;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .review-box {
+    max-width: 500px;
+    margin: 1rem auto;
+    padding: 1.5rem;
+    background:  #4a6f92;
+    border-radius: 12px;
+  }
+
+  /* Modal Settings Sections */
+  .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+  }
+  .modal:target {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal-content {
+    background: #fff;
+    color: #333;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 10% auto;
+    border-radius: 12px;
+    position: relative;
+  }
+  .close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    text-decoration: none;
+    font-size: 2rem;
+    color: #333;
+  }
+  .modal-content input,
+  .modal-content textarea,
+  .modal-content button {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  .modal-content textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .modal-content button {
+    background: #ff3366;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  .modal-content button:hover {
+    background: #e02a5c;
+  }
+
+  /* Review */
+  .reviews-section {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .review-card {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.2);
+    color: #333;
+  }
+  .review-card h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    color: #ff3366;
+  }
+  .review-card p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  @media (max-width: 1024px) {
+    .reviews-section {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .reviews-section {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  /* Footer / Social Media Section */
+  footer {
+    background: #001f3f;
+    color: #ccc;
+    text-align: center;
+    padding: 2rem 1rem 1rem;
+    margin-top: 3rem;
+    flex-shrink: 0;
+  }
+  footer a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 0.5rem;
+  }
+  .social-icons {
+    margin-top: 1rem;
+  }

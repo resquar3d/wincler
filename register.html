@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wincked Date</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <script type="module" src="matchFinder.js" defer></script>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: 'Georgia', serif;
+      background: url('/Fixed/Images/ChatGPT\ Image\ 17\ mei\ 2025\,\ 17_28_18.png') center/cover no-repeat fixed;
+      display: flex;
+      flex-direction: column;
+    }
+    header.top-nav {
+      background: #1e1e1e;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.8rem;
+      color: #ff6600;
+    }
+    .nav-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+    }
+    .nav-menu a {
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .nav-menu a:hover {
+      color: #fff;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    .hero-text {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #333;
+      animation: fadeInUp 1s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-container {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff3366;
+      width: 90%;
+      max-width: 600px;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #222;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    .radio-group {
+      margin-top: 1rem;
+    }
+    .radio-group label {
+      display: inline-block;
+      margin-right: 1rem;
+      font-weight: normal;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 2rem;
+      border-radius: 10px;
+      border: none;
+      background: #ff3366;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #e02a5c;
+    }
+    footer {
+      background: #0b2942;
+      color: #ccc;
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      flex-shrink: 0;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+    .social-icons {
+      margin-top: 1rem;
+    }
+      .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 999;
+    }
+    .modal:target {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 10% auto;
+      border-radius: 20px;
+      position: relative;
+      box-shadow: 0 0 20px #ff3366;
+    }
+    .close-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 1rem;
+      text-decoration: none;
+      font-size: 2rem;
+      color: #333;
+    }
+</style>
+</head>
+<body>
+  <header class="top-nav">
+    <h1 class="logo">Wincler</h1>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="people.html">People</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="#login-modal">Login</a></li>
+        <li><a href="review.html">Reviews</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <div class="hero-text">
+      <h2>Winck A Date</h2>
+      <p>💗 Register / Signup to find the perfect match suited for you!</p>
+    </div>
+    <div class="form-container">
+      <form id="matchForm">
+        <label for="firstName">First Name :</label>
+        <input type="text" id="firstName" required>
+
+        <label for="lastName">Last Name :</label>
+        <input type="text" id="lastName" required>
+
+        <label for="age">Your Age :</label>
+        <input type="number" id="age" min="18" required>
+
+        <label for="minAge">Minimum Age Interested In :</label>
+        <input type="number" id="minAge" min="18" required>
+
+        <label for="maxAge">Maximum Age Interested In :</label>
+        <input type="number" id="maxAge" min="18" required>
+
+        <label for="gender">Your Gender (M/F/X) :</label>
+        <input type="text" id="gender" maxlength="1" required>
+
+        <label for="genderInterest">Gender Interested In (M/F/X) :</label>
+        <input type="text" id="genderInterest" maxlength="1" required>
+
+        <label for="location">Location (rural/city) :</label>
+        <input type="text" id="location" required>
+
+        <button type="submit">Find Matches</button>
+      </form>
+      <div id="matchResults" style="margin-top:2rem;"></div>
+    </div>
+  </main>
+  <footer>
+    <p>© 2025 by R.E Espino – Student, Winc-winc Academy. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <a href="#" class="close-btn">&times;</a>
+      <h2>Login to Winck Someone</h2>
+      <form>
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" required>
+
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" required>
+
+        <button type="submit">Log In</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

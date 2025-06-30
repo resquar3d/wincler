@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wincked Date</title>
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    const query = new URLSearchParams(window.location.search);
+    const minAge = parseInt(query.get('age')) || 0;
+    const gender = query.get('gender');
+    const location = query.get('location');
+
+    const profiles = document.querySelectorAll('.profile-card');
+
+    const ageSlider = document.getElementById('age-range');
+    const genderInputs = document.querySelectorAll('input[name="gender"]');
+    const photoCheckbox = document.querySelector('input[type="checkbox"]');
+
+    function applyFilters() {
+      const ageValue = parseInt(ageSlider.value);
+      const selectedGender = [...genderInputs].find(i => i.checked)?.value || '';
+      const photosOnly = photoCheckbox.checked;
+
+      profiles.forEach(profile => {
+        const profileAge = parseInt(profile.dataset.age);
+        const profileGender = profile.dataset.gender;
+        const profileLocation = profile.dataset.location;
+        const hasPhoto = !!profile.querySelector('img')?.getAttribute('src');
+
+        let visible = true;
+        if (profileAge < ageValue) visible = false;
+        if (selectedGender && profileGender !== selectedGender) visible = false;
+        if (photosOnly && !hasPhoto) visible = false;
+
+        profile.style.display = visible ? 'block' : 'none';
+      });
+    }
+
+    // Initial query param filtering
+    if (minAge || gender || location) {
+      ageSlider.value = minAge || 18;
+      if (gender) {
+        const match = [...genderInputs].find(i => i.value === gender);
+        if (match) match.checked = true;
+      }
+    }
+
+    applyFilters();
+
+    ageSlider.addEventListener('input', applyFilters);
+    genderInputs.forEach(input => input.addEventListener('change', applyFilters));
+    photoCheckbox.addEventListener('change', applyFilters);
+  });
+</script>
+
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: url('/Fixed/Images/ChatGPT\ Image\ 17\ mei\ 2025\,\ 17_28_18.png') center/cover no-repeat fixed;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1 0 auto;
+    }
+    header.top-nav {
+      background: #1e1e1e;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.8rem;
+      color: #ff6600;
+    }
+    .nav-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+    }
+    .nav-menu a {
+      color: #f8f7f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .nav-menu a:hover {
+      color:  #f43131;
+    }
+
+    .page-layout {
+      display: flex;
+      flex: 1;
+      padding: 1rem 2rem;
+    }
+    .filter-panel {
+      width: 250px;
+      background: rgba(31, 31, 31, 0.8);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-right: 2rem;
+    }
+    .filter-group {
+      margin-bottom: 1.5rem;
+    }
+    .filter-group label,
+    .filter-group input[type="range"] {
+      display: block;
+      margin-top: 0.5rem;
+    }
+    .filter-group input[type="radio"],
+    .filter-group input[type="checkbox"] {
+      margin-right: 0.5rem;
+    }
+
+    .hero-text {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #333;
+      animation: fadeInUp 1s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .profiles-section {
+      flex: 1;
+    }
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .profile-card {
+      display: block;
+      background: rgba(42, 42, 42, 0.8);
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      text-decoration: none;
+    }
+    .profile-card.online::before, .profile-card.offline::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .profile-card.online::before {
+      background: #4caf50;
+      box-shadow: 0 0 6px #4caf50;
+    }
+    .profile-card.offline::before {
+      background: #999;
+      box-shadow: 0 0 6px #555;
+    }
+    .profile-card img {
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .profile-card img:hover {
+      transform: scale(1.05);
+    }
+    footer {
+      background: #0b2942;
+      color: #ccc;
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      flex-shrink: 0;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+    .social-icons {
+      margin-top: 1rem;
+    }
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 999;
+    }
+    .modal:target {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: #fff;
+      color: #333;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 10% auto;
+      border-radius: 12px;
+      position: relative;
+    }
+    .close-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 1rem;
+      text-decoration: none;
+      font-size: 2rem;
+      color: #333;
+    }
+      .modal-content {
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 10% auto;
+      border-radius: 20px;
+      position: relative;
+      box-shadow: 0 0 20px #ff3366;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .modal-content input,
+    .modal-content button,
+    .modal-content textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 1rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    .modal-content button {
+      background: #ff3366;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .modal-content button:hover {
+      background: #e02a5c;
+    }
+    .modal-content textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .modal-content h2 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      color: #222;
+    }
+    .modal-content p {
+      margin-top: 0.5rem;
+      color: #444;
+    }
+</style>
+</head>
+<body>
+  <header class="top-nav">
+    <h1 class="logo">Wincler</h1>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="people.html">People</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="#login-modal">Login</a></li>
+        <li><a href="review.html">Reviews</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="page-layout">
+    <aside class="filter-panel">
+      <h2>Filter by:</h2>
+      <div class="filter-group">
+        <label for="age-range">Preference</label>
+        <input type="range" id="age-range" min="18" max="99" value="33">
+      </div>
+      <div class="filter-group">
+        <label><input type="checkbox">With Photos</label>
+      </div>
+      <div class="filter-group">
+        <label><input type="radio" name="gender"> Male</label><br>
+        <label><input type="radio" name="gender"> Female</label><br>
+        <label><input type="radio" name="gender"> Others</label>
+      </div>
+    </aside>
+    <section class="profiles-section">      
+      <div class="hero-text">
+        <h2>Winck A Date</h2>
+        <p>💗 Find the perfect match person suited for you!</p>
+      </div>
+      <h2>Registered Members</h2>
+      <div class="profiles-grid">
+        <a href="#profile-1" class="profile-card online"><img src="/Fixed/Images/Devine001.jpg" alt="User 1"><h3>Alice, 28, F</h3></a>
+        <a href="#profile-2" class="profile-card offline"><img src="/Fixed/Images/Feel the Harmony.jpg" alt="User 2"><h3>Ben, 30, M</h3></a>
+        <a href="#profile-3" class="profile-card online"><img src="profile3.jpg" alt="User 3"><h3>Chloe, 25, F</h3></a>
+        <a href="#profile-4" class="profile-card offline"><img src="/Fixed/Images/Feel the Harmony3.jpg" alt="User 4"><h3>Daniel, 32, X</h3></a>
+        <a href="#profile-5" class="profile-card online"><img src="profile5.jpg" alt="User 5"><h3>Eva, 27</h3></a>
+        <a href="#profile-6" class="profile-card offline"><img src="profile6.jpg" alt="User 6"><h3>Felix, 35</h3></a>
+        <a href="#profile-7" class="profile-card online"><img src="profile7.jpg" alt="User 7"><h3>Grace, 29</h3></a>
+        <a href="#profile-8" class="profile-card offline"><img src="profile8.jpg" alt="User 8"><h3>Harry, 31</h3></a>
+        <a href="#profile-9" class="profile-card online"><img src="/Fixed/Images/Minimalistic.jpg" alt="User 9"><h3>Isla, 26</h3></a>
+        <a href="#profile-10" class="profile-card offline"><img src="profile10.jpg" alt="User 10"><h3>Jack, 34</h3></a>
+        <a href="#profile-11" class="profile-card online"><img src="profile11.jpg" alt="User 11"><h3>Karen, 33</h3></a>
+        <a href="#profile-12" class="profile-card offline"><img src="/Fixed/Images/Look At Me in brass.jpg" alt="User 12"><h3>Leo, 36</h3></a>
+        <a href="#profile-13" class="profile-card online"><img src="profile13.jpg" alt="User 13"><h3>Mia, 24</h3></a>
+        <a href="#profile-14" class="profile-card offline"><img src="profile14.jpg" alt="User 14"><h3>Nick, 38</h3></a>
+        <a href="#profile-15" class="profile-card online"><img src="profile15.jpg" alt="User 15"><h3>Olivia, 27</h3></a>
+        <a href="#profile-16" class="profile-card offline"><img src="/Fixed/Images/Split Persona in Brass.jpg" alt="User 16"><h3>Paul, 37</h3></a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Profile Modals -->
+  <div id="profile-1" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Alice, 28</h2><p>Location : Rural Area</p><p>Hobbies : Loves books and wine tastings.</p></div></div>
+  <div id="profile-2" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Ben, 30</h2><p>Location : City Centrum Area</p><p>Hobbies : Passionate about hiking and photography.</p></div></div>
+  <div id="profile-3" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Chloe, 25</h2><p>Location : Countryside Area</p><p>Hobbies : Always laughing. Coffee enthusiast.</p></div></div>
+  <div id="profile-4" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Daniel, 32</h2><p>Location : Rural Area</p><p>Hobbies : Coder by day, guitarist by night.</p></div></div>
+  <div id="profile-5" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Eva, 27</h2><p>Location : Seaside Coast Area</p><p>Hobbies : Adventurous spirit and a foodie.</p></div></div>
+  <div id="profile-6" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Felix, 35</h2><p>Location : City Centrum Area</p><p>Hobbies : Chess master. Wine connoisseur.</p></div></div>
+  <div id="profile-7" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Grace, 29</h2><p>Location : Countryside South Area</p><p>Hobbies : Loves poetry, sunsets, and warm hugs.</p></div></div>
+  <div id="profile-8" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Harry, 31</h2><p>Location : Countryside East Area</p><p>Hobbies : Fitness geek and beach runner.</p></div></div>
+  <div id="profile-9" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Isla, 26</h2><p>Location : City Centrum South Area</p><p>Hobbies : Creative soul with a camera.</p></div></div>
+  <div id="profile-10" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Jack, 34</h2><p>Location : Bay Area</p><p>Hobbies : Dog dad, gamer, and BBQ king.</p></div></div>
+  <div id="profile-11" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Karen, 33</h2><p>Location : Rural Countryside Area</p><p>Hobbies : Yoga lover and tea sipper.</p></div></div>
+  <div id="profile-12" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Leo, 36</h2><p>Location : South City Centrum Area</p><p>Hobbies : Bookworm with a sarcastic streak.</p></div></div>
+  <div id="profile-13" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Mia, 24</h2><p>Location : Rural Area</p><p>Hobbies : Sweet, smart, and spontaneous.</p></div></div>
+  <div id="profile-14" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Nick, 38</h2><p>Location : Bay Area</p><p>Hobbies : Motorcycles, mystery novels, and mochas.</p></div></div>
+  <div id="profile-15" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Olivia, 27</h2><p>Location : City Centrum South Area</p><p>Hobbies : Dancer and travel junkie.</p></div></div>
+  <div id="profile-16" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Paul, 37</h2><p>Location : Seaside Coast Area</p><p>Hobbies : Gentle giant with a green thumb.</p></div></div>
+
+  <!-- Signup Modal -->
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <a href="#" class="close-btn">&times;</a>
+      <h2>Login</h2>
+      <form>
+        <input type="text" placeholder="Username" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reviews Modal -->
+  <div id="reviews-modal" class="modal">
+    <div class="modal-content">
+      <a href="#" class="close-btn">&times;</a>
+      <h2>User Reviews</h2>
+      <p>“Amazing experience! Found my match within days.” - Jamie</p>
+      <p>“Fun, easy to use, and real people!” - Alex</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 by R.E Espino – Student, Winc-winc Academy. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+  
+</body>
+</html>
