@@ -110,6 +110,8 @@
     button:hover {
       background: #e02a5c;
     }
+
+    /* Footer Styles */
     footer {
       background: #0b2942;
       color: #ccc;
@@ -126,7 +128,9 @@
     .social-icons {
       margin-top: 1rem;
     }
-      .modal {
+
+    /* Modal Styles */
+    .modal {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
@@ -158,6 +162,107 @@
       font-size: 2rem;
       color: #333;
     }
+
+    /* Mobile Responsive Design */
+    /* === ≤480px: Small Mobile Screens === */
+    @media (max-width: 480px) {
+      .top-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  .hero-text h2 {
+    font-size: 1.4rem;
+  }
+
+  .hero-text p {
+    font-size: 0.95rem;
+  }
+
+  .form-container {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 1.25rem;
+    box-sizing: border-box;
+  }
+
+  footer {
+    padding: 1.5rem 1rem;
+  }
+
+  .social-icons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* === 481–639px: Mid-Mobile Screens === */
+@media (min-width: 481px) and (max-width: 639px) {
+  main {
+    padding: 1.25rem;
+  }
+
+  .form-container {
+    padding: 1.25rem;
+  }
+
+  .modal-content {
+    width: 85%;
+    padding: 1.25rem;
+    box-sizing: border-box;
+  }
+}
+
+/* === 640–767px: Small Tablets & Phablets === */
+@media (min-width: 640px) and (max-width: 767px) {
+  main {
+    padding: 1.5rem;
+  }
+
+  .form-container {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .modal-content {
+    width: 75%;
+    padding: 1.5rem;
+    box-sizing: border-box;
+  }
+}
+
+/* === 768–1279px: Tablets & Small Laptops === */
+@media (min-width: 768px) and (max-width: 1279px) {
+  main {
+    padding: 2rem;
+  }
+
+  .form-container {
+    max-width: 600px;
+  }
+
+  .modal-content {
+    width: 65%;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+}
+
 </style>
 </head>
 <body>
