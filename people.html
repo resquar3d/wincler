@@ -12,8 +12,6 @@
     const gender = query.get('gender');
     const location = query.get('location');
 
-    const profiles = document.querySelectorAll('.profile-card');
-
     const ageSlider = document.getElementById('age-range');
     const genderInputs = document.querySelectorAll('input[name="gender"]');
     const photoCheckbox = document.querySelector('input[type="checkbox"]');
@@ -22,6 +20,8 @@
       const ageValue = parseInt(ageSlider.value);
       const selectedGender = [...genderInputs].find(i => i.checked)?.value || '';
       const photosOnly = photoCheckbox.checked;
+
+      const profiles = document.querySelectorAll('.profile-card');
 
       profiles.forEach(profile => {
         const profileAge = parseInt(profile.dataset.age);
@@ -38,7 +38,6 @@
       });
     }
 
-    // Initial query param filtering
     if (minAge || gender || location) {
       ageSlider.value = minAge || 18;
       if (gender) {
@@ -55,216 +54,323 @@
   });
 </script>
 
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: url('/Fixed/Images/ChatGPT\ Image\ 17\ mei\ 2025,\ 17_28_18.png') center/cover no-repeat fixed;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1 0 auto;
+}
+header.top-nav {
+  background: #1e1e1e;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-size: 1.8rem;
+  color: #ff6600;
+}
+.nav-menu ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+.nav-menu a {
+  color: #f8f7f7;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.nav-menu a:hover {
+  color: #f43131;
+}
+.page-layout {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 2rem;
+  gap: 2rem;
+}
+.filter-panel {
+  flex: 1 1 250px;
+  background: rgba(31, 31, 31, 0.8);
+  padding: 1rem;
+  border-radius: 8px;
+}
+.filter-group {
+  margin-bottom: 1.5rem;
+}
+.filter-group label,
+.filter-group input[type="range"] {
+  display: block;
+  margin-top: 0.5rem;
+}
+.filter-group input[type="radio"],
+.filter-group input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+.hero-text {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #e6e6e6;
+}
+.profiles-section {
+  flex: 3 1 600px;
+}
+.profiles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+.profile-card {
+  background: rgba(42, 42, 42, 0.85);
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+.profile-card:hover {
+  transform: scale(1.03);
+}
+.profile-card.online::before,
+.profile-card.offline::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.profile-card.online::before {
+  background: #4caf50;
+  box-shadow: 0 0 6px #4caf50;
+}
+.profile-card.offline::before {
+  background: #999;
+  box-shadow: 0 0 6px #555;
+}
+.profile-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+  margin-bottom: 0.5rem;
+}
 
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Georgia', serif;
-      background: url('/Fixed/Images/ChatGPT\ Image\ 17\ mei\ 2025\,\ 17_28_18.png') center/cover no-repeat fixed;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-    }
-    main {
-      flex: 1 0 auto;
-    }
-    header.top-nav {
-      background: #1e1e1e;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      font-size: 1.8rem;
-      color: #ff6600;
-    }
-    .nav-menu ul {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-      margin: 0;
-    }
-    .nav-menu a {
-      color: #f8f7f7;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .nav-menu a:hover {
-      color:  #f43131;
-    }
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+.modal:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-content {
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 10% auto;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #ff3366;
+  font-family: 'Segoe UI', sans-serif;
+}
+.modal-content input,
+.modal-content button,
+.modal-content textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+.modal-content button {
+  background: #ff3366;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.modal-content button:hover {
+  background: #e02a5c;
+}
+.modal-content textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+.modal-content h2 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  color: #222;
+}
+.modal-content p {
+  margin-top: 0.5rem;
+  color: #444;
+}
 
-    .page-layout {
-      display: flex;
-      flex: 1;
-      padding: 1rem 2rem;
-    }
-    .filter-panel {
-      width: 250px;
-      background: rgba(31, 31, 31, 0.8);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-right: 2rem;
-    }
-    .filter-group {
-      margin-bottom: 1.5rem;
-    }
-    .filter-group label,
-    .filter-group input[type="range"] {
-      display: block;
-      margin-top: 0.5rem;
-    }
-    .filter-group input[type="radio"],
-    .filter-group input[type="checkbox"] {
-      margin-right: 0.5rem;
-    }
+/* Footer Styles */
+footer {
+  background: #0b2942;
+  color: #ccc;
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+  flex-shrink: 0;
+}
+footer a {
+  color: #ccc;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.social-icons {
+  margin-top: 1rem;
+}
 
-    .hero-text {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #333;
-      animation: fadeInUp 1s ease-out;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .profiles-section {
-      flex: 1;
-    }
-    .profiles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1rem;
-    }
-    .profile-card {
-      display: block;
-      background: rgba(42, 42, 42, 0.8);
-      padding: 1rem;
-      border-radius: 10px;
-      text-align: center;
-      color: #fff;
-      position: relative;
-      text-decoration: none;
-    }
-    .profile-card.online::before, .profile-card.offline::before {
-      content: "";
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-    .profile-card.online::before {
-      background: #4caf50;
-      box-shadow: 0 0 6px #4caf50;
-    }
-    .profile-card.offline::before {
-      background: #999;
-      box-shadow: 0 0 6px #555;
-    }
-    .profile-card img {
-      width: 100%;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    .profile-card img:hover {
-      transform: scale(1.05);
-    }
-    footer {
-      background: #0b2942;
-      color: #ccc;
-      text-align: center;
-      padding: 2rem 1rem 1rem;
-      flex-shrink: 0;
-      margin-top: 3rem;
-    }
-    footer a {
-      color: #ccc;
-      text-decoration: none;
-      margin: 0 0.5rem;
-    }
-    .social-icons {
-      margin-top: 1rem;
-    }
-    .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 999;
-    }
-    .modal:target {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .modal-content {
-      background: #fff;
-      color: #333;
-      padding: 2rem;
-      max-width: 500px;
-      margin: 10% auto;
-      border-radius: 12px;
-      position: relative;
-    }
-    .close-btn {
-      position: absolute;
-      top: 0.5rem;
-      right: 1rem;
-      text-decoration: none;
-      font-size: 2rem;
-      color: #333;
-    }
-      .modal-content {
-      background: rgba(255, 255, 255, 0.95);
-      color: #333;
-      padding: 2rem;
-      max-width: 500px;
-      margin: 10% auto;
-      border-radius: 20px;
-      position: relative;
-      box-shadow: 0 0 20px #ff3366;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .modal-content input,
-    .modal-content button,
-    .modal-content textarea {
-      width: 100%;
-      padding: 0.75rem;
-      margin-top: 1rem;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      font-family: inherit;
-    }
-    .modal-content button {
-      background: #ff3366;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .modal-content button:hover {
-      background: #e02a5c;
-    }
-    .modal-content textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-    .modal-content h2 {
-      margin-top: 0;
-      font-size: 1.8rem;
-      color: #222;
-    }
-    .modal-content p {
-      margin-top: 0.5rem;
-      color: #444;
-    }
+/* Mobile Responsive Design */
+
+/* === ≤480px: Small Mobile Screens === */
+@media (max-width: 480px) {
+  .top-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .page-layout {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .filter-panel,
+  .profiles-section {
+    width: 100%;
+  }
+
+  .profiles-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .form-container {
+    padding: 1.25rem;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 1.25rem;
+    box-sizing: border-box;
+  }
+
+  footer {
+    padding: 1.5rem 1rem;
+  }
+
+  .hero-text h2 {
+    font-size: 1.4rem;
+  }
+
+  .hero-text p {
+    font-size: 0.95rem;
+  }
+}
+
+/* === 481–639px: Mid-Mobile Screens === */
+@media (min-width: 481px) and (max-width: 639px) {
+  .page-layout {
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .profiles-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .form-container {
+    padding: 1.25rem;
+  }
+
+  .modal-content {
+    width: 85%;
+    padding: 1.25rem;
+    box-sizing: border-box;
+  }
+}
+
+/* === 640–767px: Small Tablets & Phablets === */
+@media (min-width: 640px) and (max-width: 767px) {
+  .page-layout {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .profiles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filter-panel {
+    width: 100%;
+  }
+
+  .form-container {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .modal-content {
+    width: 75%;
+    padding: 1.5rem;
+    box-sizing: border-box;
+  }
+}
+
+/* === 768–1279px: Tablets & Small Laptops === */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .page-layout {
+    flex-direction: row;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .filter-panel {
+    flex: 0 0 220px;
+  }
+
+  .profiles-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .modal-content {
+    width: 75%;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -291,55 +397,20 @@
         <label><input type="checkbox">With Photos</label>
       </div>
       <div class="filter-group">
-        <label><input type="radio" name="gender"> Male</label><br>
-        <label><input type="radio" name="gender"> Female</label><br>
-        <label><input type="radio" name="gender"> Others</label>
+        <label><input type="radio" name="gender" value="M"> Male</label><br>
+        <label><input type="radio" name="gender" value="F"> Female</label><br>
+        <label><input type="radio" name="gender" value="X"> Others</label>
       </div>
     </aside>
-    <section class="profiles-section">      
+    <section class="profiles-section">
       <div class="hero-text">
         <h2>Winck A Date</h2>
         <p>💗 Find the perfect match person suited for you!</p>
       </div>
       <h2>Registered Members</h2>
-      <div class="profiles-grid">
-        <a href="#profile-1" class="profile-card online"><img src="/Fixed/Images/Devine001.jpg" alt="User 1"><h3>Alice, 28, F</h3></a>
-        <a href="#profile-2" class="profile-card offline"><img src="/Fixed/Images/Feel the Harmony.jpg" alt="User 2"><h3>Ben, 30, M</h3></a>
-        <a href="#profile-3" class="profile-card online"><img src="profile3.jpg" alt="User 3"><h3>Chloe, 25, F</h3></a>
-        <a href="#profile-4" class="profile-card offline"><img src="/Fixed/Images/Feel the Harmony3.jpg" alt="User 4"><h3>Daniel, 32, X</h3></a>
-        <a href="#profile-5" class="profile-card online"><img src="profile5.jpg" alt="User 5"><h3>Eva, 27</h3></a>
-        <a href="#profile-6" class="profile-card offline"><img src="profile6.jpg" alt="User 6"><h3>Felix, 35</h3></a>
-        <a href="#profile-7" class="profile-card online"><img src="profile7.jpg" alt="User 7"><h3>Grace, 29</h3></a>
-        <a href="#profile-8" class="profile-card offline"><img src="profile8.jpg" alt="User 8"><h3>Harry, 31</h3></a>
-        <a href="#profile-9" class="profile-card online"><img src="/Fixed/Images/Minimalistic.jpg" alt="User 9"><h3>Isla, 26</h3></a>
-        <a href="#profile-10" class="profile-card offline"><img src="profile10.jpg" alt="User 10"><h3>Jack, 34</h3></a>
-        <a href="#profile-11" class="profile-card online"><img src="profile11.jpg" alt="User 11"><h3>Karen, 33</h3></a>
-        <a href="#profile-12" class="profile-card offline"><img src="/Fixed/Images/Look At Me in brass.jpg" alt="User 12"><h3>Leo, 36</h3></a>
-        <a href="#profile-13" class="profile-card online"><img src="profile13.jpg" alt="User 13"><h3>Mia, 24</h3></a>
-        <a href="#profile-14" class="profile-card offline"><img src="profile14.jpg" alt="User 14"><h3>Nick, 38</h3></a>
-        <a href="#profile-15" class="profile-card online"><img src="profile15.jpg" alt="User 15"><h3>Olivia, 27</h3></a>
-        <a href="#profile-16" class="profile-card offline"><img src="/Fixed/Images/Split Persona in Brass.jpg" alt="User 16"><h3>Paul, 37</h3></a>
-      </div>
+      <div class="profiles-grid"></div>
     </section>
   </main>
-
-  <!-- Profile Modals -->
-  <div id="profile-1" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Alice, 28</h2><p>Location : Rural Area</p><p>Hobbies : Loves books and wine tastings.</p></div></div>
-  <div id="profile-2" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Ben, 30</h2><p>Location : City Centrum Area</p><p>Hobbies : Passionate about hiking and photography.</p></div></div>
-  <div id="profile-3" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Chloe, 25</h2><p>Location : Countryside Area</p><p>Hobbies : Always laughing. Coffee enthusiast.</p></div></div>
-  <div id="profile-4" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Daniel, 32</h2><p>Location : Rural Area</p><p>Hobbies : Coder by day, guitarist by night.</p></div></div>
-  <div id="profile-5" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Eva, 27</h2><p>Location : Seaside Coast Area</p><p>Hobbies : Adventurous spirit and a foodie.</p></div></div>
-  <div id="profile-6" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Felix, 35</h2><p>Location : City Centrum Area</p><p>Hobbies : Chess master. Wine connoisseur.</p></div></div>
-  <div id="profile-7" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Grace, 29</h2><p>Location : Countryside South Area</p><p>Hobbies : Loves poetry, sunsets, and warm hugs.</p></div></div>
-  <div id="profile-8" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Harry, 31</h2><p>Location : Countryside East Area</p><p>Hobbies : Fitness geek and beach runner.</p></div></div>
-  <div id="profile-9" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Isla, 26</h2><p>Location : City Centrum South Area</p><p>Hobbies : Creative soul with a camera.</p></div></div>
-  <div id="profile-10" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Jack, 34</h2><p>Location : Bay Area</p><p>Hobbies : Dog dad, gamer, and BBQ king.</p></div></div>
-  <div id="profile-11" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Karen, 33</h2><p>Location : Rural Countryside Area</p><p>Hobbies : Yoga lover and tea sipper.</p></div></div>
-  <div id="profile-12" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Leo, 36</h2><p>Location : South City Centrum Area</p><p>Hobbies : Bookworm with a sarcastic streak.</p></div></div>
-  <div id="profile-13" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Mia, 24</h2><p>Location : Rural Area</p><p>Hobbies : Sweet, smart, and spontaneous.</p></div></div>
-  <div id="profile-14" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Nick, 38</h2><p>Location : Bay Area</p><p>Hobbies : Motorcycles, mystery novels, and mochas.</p></div></div>
-  <div id="profile-15" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Olivia, 27</h2><p>Location : City Centrum South Area</p><p>Hobbies : Dancer and travel junkie.</p></div></div>
-  <div id="profile-16" class="modal"><div class="modal-content"><a href="#" class="close-btn">&times;</a><h2>Paul, 37</h2><p>Location : Seaside Coast Area</p><p>Hobbies : Gentle giant with a green thumb.</p></div></div>
 
   <!-- Signup Modal -->
   <div id="login-modal" class="modal">
@@ -372,6 +443,38 @@
       <a href="#">Instagram</a>
     </div>
   </footer>
-  
+
+  <script type="module">
+    import { data } from './mockData.js';
+
+    const grid = document.querySelector('.profiles-grid');
+    const body = document.body;
+
+    data.forEach((user, i) => {
+      const id = `profile-${i + 1}`;
+      const imgSrc = `/Fixed/Images/${user.image}`;
+
+
+      const card = `
+        <a href="#${id}" class="profile-card ${i % 2 === 0 ? 'online' : 'offline'}"
+           data-age="${user.age}" data-gender="${user.gender}" data-location="${user.location}">
+          <img src="${imgSrc}" alt="${user.firstName}">
+          <h3>${user.firstName}, ${user.age}, ${user.gender}</h3>
+        </a>`;
+      grid.innerHTML += card;
+
+      const modal = `
+        <div id="${id}" class="modal">
+          <div class="modal-content">
+            <a href="#" class="close-btn">&times;</a>
+            <h2>${user.firstName}, ${user.age}</h2>
+            <p>Location: ${user.location}</p>
+            <p>Full Name: ${user.firstName} ${user.lastName}</p>
+          </div>
+        </div>`;
+      body.insertAdjacentHTML('beforeend', modal);
+    });
+  </script>
+
 </body>
 </html>
