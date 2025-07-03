@@ -232,16 +232,50 @@
     font-size: 1rem;
     line-height: 1.4;
   }
-  @media (max-width: 1024px) {
-    .reviews-section {
-      grid-template-columns: repeat(1, 1fr);
-    }
+
+  /* Search Form Styles */
+  .search-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.50rem;
+    max-width: 400px;
+    margin: 2rem auto 0 auto;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1.2rem;
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    color: #fff;
   }
   
-  @media (max-width: 640px) {
-    .reviews-section {
-      grid-template-columns: repeat(1, 1fr);
-    }
+  .search-form label {
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+  }
+  
+  .search-form select,
+  .search-form input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+  }
+  
+  .search-form button {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    background: #ff3366;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .search-form button:hover {
+    background: #e02a5c;
   }
 
   /* Footer / Social Media Section */
@@ -261,3 +295,123 @@
   .social-icons {
     margin-top: 1rem;
   }
+
+  /* Mobile Responsive Design */
+/* === ≤480px: Small Mobile Screens === */
+@media (max-width: 480px) {
+  .top-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  .hero-text h2 {
+    font-size: 1.4rem;
+  }
+
+  .hero-text p {
+    font-size: 0.95rem;
+  }
+
+  .search-form {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-top: 2rem;
+    z-index: 2;
+    position: relative;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  footer {
+    padding: 1.5rem 1rem;
+  }
+
+  .social-icons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* === 481–639px: Mid-Mobile Screens === */
+@media (min-width: 481px) and (max-width: 639px) {
+  main {
+    padding: 1.25rem;
+  }
+
+  .form-container {
+    padding: 1.25rem;
+  }
+
+  .search-form {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-top: 2rem;
+    z-index: 2;
+    position: relative;
+  }
+
+  .modal-content {
+    width: 85%;
+  }
+}
+
+/* === 640–767px: Small Tablets & Phablets === */
+@media (min-width: 640px) and (max-width: 767px) {
+  main {
+    padding: 1.5rem;
+  }
+
+  .form-container {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .search-form {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-top: 2rem;
+    z-index: 2;
+    position: relative;
+  }
+
+  .modal-content {
+    width: 75%;
+  }
+}
+
+/* === 768–1279px: Tablets & Small Laptops === */
+@media (min-width: 768px) and (max-width: 1279px) {
+  main {
+    padding: 2rem;
+  }
+
+  .form-container {
+    max-width: 600px;
+  }
+
+  .search-form {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-top: 2rem;
+    z-index: 2;
+    position: relative;
+  }
+
+  .modal-content {
+    width: 65%;
+  }
+}
